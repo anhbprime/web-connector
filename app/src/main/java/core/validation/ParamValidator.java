@@ -8,14 +8,6 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-/**
- * 매우 단순한 JSON 파라미터 검증기.
- *
- * - of(root) : 최상위 JSON 대상으로 시작
- * - into("obj") : root.getJSONObject("obj") 기준으로 변경 (절대 경로 느낌)
- * - out() : 다시 root 기준으로 복귀
- * - eachVal / eachObj : 배열 검사용 헬퍼 (기존 메소드 재사용)
- */
 public final class ParamValidator {
 
     private final JSONObject root;
@@ -53,8 +45,6 @@ public final class ParamValidator {
         }
     }
 
-    // ---------- 스코프 이동 (절대 경로) ----------
-
     public ParamValidator into(String... keys) {
         JSONObject obj = root;
         for (String key : keys) {
@@ -86,8 +76,6 @@ public final class ParamValidator {
         String v = target.optString(key, "").trim();
         return v.isEmpty() ? null : v;
     }
-
-    // ---------- 기본 검증 ----------
 
     public ParamValidator require(String key) {
         if (norm(key) == null) {
@@ -136,8 +124,6 @@ public final class ParamValidator {
         return this;
     }
 
-    // ---------- 배열 헬퍼 (단순 값) ----------
-
     public ParamValidator eachVal(String arrayKey, String elementKey,
                                   java.util.function.Consumer<ParamValidator> fn) {
         if (target == null) {
@@ -164,8 +150,6 @@ public final class ParamValidator {
         this.target = originalTarget;
         return this;
     }
-
-    // ---------- 배열 헬퍼 (object array) ----------
 
     public ParamValidator eachObj(String arrayKey,
                                   java.util.function.Consumer<ParamValidator> fn) {
