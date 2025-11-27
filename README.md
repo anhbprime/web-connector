@@ -1,4 +1,10 @@
 ```mermaid
+---
+단일 JSON 프로토콜 Client
+Web UI 요청에 따라 로직 수행
+Page/Op 단위로 동작함
+---
+
 flowchart TD
     Client[CLI JSON 입력] --> Main[app.Main]
     Main --> ConnectionFactory
